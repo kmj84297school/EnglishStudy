@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>열공 · 영어 지문 공부</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430; --paper:#F5F3EC; --card:#FFFFFF;
+    --hl:#FFE15A; --red:#E0492F; --gray:#878D96;
+    --line:#E3E0D6; --green:#3E7C59;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Noto Sans KR',sans-serif;background:var(--paper);color:var(--ink);
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 60px}
+
+  /* ── 헤더 ── */
+  header{padding:20px 0 8px}
+  .brand{font-family:'Black Han Sans',sans-serif;font-size:30px;line-height:1;letter-spacing:-.5px}
+  .brand .dot{color:var(--red)}
+  .brand small{font-family:'Noto Sans KR';font-size:12px;font-weight:500;color:var(--gray);margin-left:8px;letter-spacing:0}
+  .navrow{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+  .tabs{display:flex;gap:6px}
+  .tab{font-size:12px;font-weight:700;padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);color:var(--gray);background:transparent;transition:.15s}
+  .tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* ── 포스트잇 응원 ── */
+  .cheer{margin-top:14px;background:var(--hl);border-radius:10px;padding:13px 16px;
+    transform:rotate(-.7deg);box-shadow:3px 4px 0 rgba(27,36,48,.16)}
+  .cheer .lbl{font-size:11px;font-weight:800;color:var(--ink);opacity:.55;letter-spacing:.2px}
+  .cheer .msg{font-family:'Gaegu',cursive;font-weight:700;font-size:21px;line-height:1.25;margin-top:2px}
+
+  h2.sec{font-size:14px;font-weight:800;margin:22px 0 10px}
+  .mark{background:linear-gradient(104deg,transparent 1%,var(--hl) 3%,var(--hl) 97%,transparent 99%);padding:0 5px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+  .hint{font-size:11px;font-weight:500;color:var(--gray);margin-left:6px}
+
+  /* ── 칩 ── */
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:999px;background:var(--card);border:1.5px solid var(--line);transition:.15s}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  /* ── 지문 그리드 ── */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:4px}
+  .pcell{border:2px solid var(--ink);border-radius:13px;background:var(--card);
+    padding:14px 6px;font-weight:800;font-size:15px;box-shadow:2px 2px 0 var(--ink);transition:.12s;text-align:center;min-height:78px;display:flex;flex-direction:column;justify-content:center}
+  .pcell:active{transform:translate(2px,2px);box-shadow:0 0 0 var(--ink)}
+  .pcell.done{background:var(--ink);color:var(--hl)}
+  .pcell .tp{display:block;font-size:9px;font-weight:500;color:var(--gray);margin-top:4px;line-height:1.25;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .pcell.done .tp{color:#aeb4bb}
+  .empty{grid-column:1/-1;background:var(--card);border:1.5px dashed var(--line);border-radius:12px;padding:18px;font-size:13px;color:var(--gray);text-align:center}
+
+  /* ── 학습 화면 ── */
+  .back{font-size:12px;font-weight:700;color:var(--gray);margin:6px 0 12px;display:inline-block}
+  .ptitle{font-family:'Black Han Sans',sans-serif;font-size:22px;margin-bottom:2px}
+  .ptitle .n{color:var(--red)}
+  .ptopic{font-size:12.5px;color:var(--gray);margin-bottom:14px}
+  .modes{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .mbtn{font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--card);border:1.5px solid var(--line);color:var(--ink);transition:.15s}
+  .mbtn.on{background:var(--red);color:#fff;border-color:var(--red)}
+
+  .card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:15px;margin-bottom:11px}
+  .stitle{display:flex;align-items:baseline;gap:7px;margin-bottom:9px}
+  .stitle .no{font-family:'Black Han Sans',sans-serif;color:var(--red);font-size:15px}
+  .stitle h3{font-size:15px;font-weight:800}
+  .lead{font-size:14px;font-weight:600}
+  .txt{font-size:13.5px;white-space:pre-line}
+
+  /* 만화 컷 */
+  .comic{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .cut{border:2px solid var(--ink);background:#FFFEF6;border-radius:8px;padding:9px 10px;font-size:12px;line-height:1.45;box-shadow:2px 2px 0 var(--ink)}
+  .cut:nth-child(odd){transform:rotate(-.6deg)}
+  .cut:nth-child(even){transform:rotate(.6deg)}
+  .cut b{font-family:'Black Han Sans',sans-serif;font-weight:400;color:var(--red);font-size:11px;display:block;margin-bottom:2px}
+
+  /* 구조 */
+  .strow{display:flex;gap:8px;margin-bottom:7px;font-size:13.5px}
+  .stag{flex:none;align-self:flex-start;background:var(--ink);color:#fff;font-size:11px;font-weight:700;border-radius:5px;padding:2px 7px;white-space:nowrap}
+
+  /* 어휘 */
+  .voc{font-size:13.5px;padding-bottom:7px;margin-bottom:7px;border-bottom:1px dashed var(--line)}
+  .voc:last-child{border:none;margin:0;padding:0}
+  .voc b{color:var(--red)}
+  .voc .role{display:block;font-size:11.5px;color:var(--gray);margin-top:2px}
+
+  /* 문장 */
+  .sent{margin-bottom:11px}
+  .sent:last-child{margin:0}
+  .sent .en{font-size:12.5px;font-style:italic;background:#F0EEE6;border-radius:7px;padding:7px 9px;margin-bottom:4px}
+  .sent .ko{font-size:13.5px}
+
+  .exambox{border-left:4px solid var(--red);padding-left:11px}
+  .reviewline{font-size:14px;font-weight:700}
+
+  /* 퀴즈 */
+  .qz{margin-bottom:9px}
+  .qz:last-child{margin:0}
+  .qz .q{font-size:13.5px;margin-bottom:5px}
+  .qbtn{font-size:12px;font-weight:700;border-radius:999px;padding:5px 13px;background:var(--hl);color:var(--ink);transition:.15s}
+  .qbtn.open{background:var(--ink);color:#fff}
+
+  /* 총복습 */
+  .rv{background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:13px;margin-bottom:9px}
+  .rv .meta{font-size:11.5px;font-weight:700;color:var(--red);margin-bottom:3px}
+  .rv .rl{font-size:13.5px;font-weight:700}
+  .rv .sm{font-size:11.5px;color:var(--gray);margin-top:2px}
+
+  footer{text-align:center;font-size:11px;color:var(--gray);margin-top:26px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="navrow">
+      <div class="brand">열공<span class="dot">.</span><small>영어 지문 공부</small></div>
+      <div class="tabs">
+        <button class="tab on" id="tabStudy">학습</button>
+        <button class="tab" id="tabReview">총복습</button>
+      </div>
+    </div>
+    <div class="cheer">
+      <div class="lbl" id="cheerLbl">📌 오늘의 응원</div>
+      <div class="msg" id="cheerMsg">…</div>
+    </div>
+  </header>
+  <main id="app"></main>
+  <footer>
+    같은 학교 친구들과 함께 쓰는 영어 모의고사 스터디 페이지<br>
+    분석은 9단계 포맷 · 응원 문구는 매일 자동으로 바뀝니다 · 열공!
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+/* ───────── 응원 문구 60개 (날짜 기반 로테이션) ───────── */
+const CHEERS = [
+  "오늘 읽은 한 지문이 시험장에서 너를 구한다!",
+  "빈칸은 흐름을 잡은 사람이 이긴다. 천천히 가자!",
+  "지문 한 컷, 실력 한 스텝. 가볍게 쌓아가자!",
+  "어휘 하나가 1점을 만든다. 오늘도 한 개 더!",
+  "독해는 속도가 아니라 이해다. 꼭꼭 씹자!",
+  "모르는 문장은 적이 아니라 다음 레벨로 가는 문이다!",
+  "어제의 너보다 한 지문만큼 더 똑똑해졌다!",
+  "지문 구조가 보이면 정답도 보인다!",
+  "밑줄 함축은 결국 글의 큰 그림. 멀리서 보자!",
+  "오늘의 5지문이 모여 시험날의 자신감이 된다!",
+  "헷갈리는 문장일수록 주어·동사부터 찾자!",
+  "포기하지 않는 사람만 빈칸을 채운다!",
+  "틈새 시간에 한 문장. 그게 쌓이면 실력!",
+  "순서·삽입은 연결어가 길을 알려준다!",
+  "단어를 외우는 게 아니라 친해지는 거다!",
+  "오답도 데이터다. 왜 틀렸는지가 보물이다!",
+  "지문은 작가와의 대화. 무슨 말 하나 들어보자!",
+  "꾸준함이 재능을 이긴다. 오늘도 출석!",
+  "어려운 41·42번도 한 컷씩 보면 쉬워진다!",
+  "주제문 한 줄만 잡아도 절반은 푼 거다!",
+  "긴장될 땐 심호흡, 그리고 첫 문장부터!",
+  "today의 너는 어제보다 분명히 강하다!",
+  "감정 단어 vs 이성 단어, 대조를 즐기자!",
+  "마음은 가볍게, 공부는 꾸준하게!",
+  "한 지문을 끝까지 이해하면 열 지문이 보인다!",
+  "어휘 문제는 반의어 함정만 피하면 OK!",
+  "글의 반전(however)을 찾으면 출제 포인트가 보인다!",
+  "느려도 괜찮아, 멈추지만 않으면 도착한다!",
+  "오늘 만난 표현, 시험에서 반갑게 만나자!",
+  "독해 근육도 매일 써야 자란다!",
+  "복습은 미래의 나에게 주는 선물이다!",
+  "지문 속 'this/that'이 가리키는 걸 찾자!",
+  "5지문이면 충분해. 욕심보다 꾸준함!",
+  "어려웠다면, 그만큼 성장한 거다!",
+  "정답은 항상 지문 안에 있다. 근거를 찾자!",
+  "오늘도 한 컷 한 컷, 만화 보듯 가볍게!",
+  "빈칸 앞뒤 문장이 정답의 힌트다!",
+  "긴 문장은 끊어 읽기. 한 덩이씩!",
+  "모의고사는 연습. 틀려도 괜찮은 무대다!",
+  "지문의 마지막 문장에 주제가 숨어 있다!",
+  "한 발 더 나아가듯, 지문 하나 더!",
+  "영어는 매일 조금씩이 정답이다!",
+  "오늘의 집중이 시험날 1등급을 만든다!",
+  "어휘·구조·흐름, 셋만 잡으면 끝!",
+  "막히면 한국어 해석부터, 그다음 영어로!",
+  "작은 진전도 진전이다. 박수!",
+  "독해는 추리 게임. 단서를 모으자!",
+  "오늘 배운 10초 복습 문장, 꼭 떠올리자!",
+  "꾸준한 한 번의 공부가 너를 바꾼다!",
+  "지문이 길어도 핵심은 한 문장이다!",
+  "어제 헷갈린 지문, 오늘은 친구가 됐다!",
+  "시험은 결국 평소 실력의 거울이다!",
+  "한 지문의 깊은 이해 > 열 지문 대충!",
+  "오늘도 책상 앞에서 1점씩 모으자!",
+  "글쓴이가 진짜 하고 싶은 말을 찾자!",
+  "반복되는 단어가 곧 주제어다!",
+  "천천히 읽어도 정확히 읽으면 이긴다!",
+  "오늘의 다섯 지문, 내일의 든든함!",
+  "할 수 있다. 이미 하고 있으니까!",
+  "마지막 한 지문까지, 가볍게 끝내자!"
+];
+function todayKey(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function dayOfYear(){const d=new Date();const s=new Date(d.getFullYear(),0,0);return Math.floor((d-s)/86400000);}
+(function setCheer(){
+  document.getElementById("cheerMsg").textContent = CHEERS[dayOfYear()%CHEERS.length];
+  const k=todayKey();
+  document.getElementById("cheerLbl").textContent = "📌 오늘의 응원 · "+k.slice(5).replace("-","/");
+})();
+
+/* ───────── 상태 ───────── */
+const DATA = (window.STUDY_DATA && window.STUDY_DATA.exams) || [];
+const MODES=[{id:"basic",l:"기본"},{id:"easy",l:"더 쉽게"},{id:"short",l:"더 짧게"},{id:"quiz",l:"문제 중심"},{id:"vocab",l:"단어 중심"},{id:"final",l:"시험 직전용"}];
+let state={tab:"study",examIdx:0,passage:null,mode:"basic"};
+const app=document.getElementById("app");
+const esc=s=>(s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* ───────── 렌더 ───────── */
+function render(){
+  if(state.tab==="review") return renderReview();
+  if(state.passage!=null) return renderPassage();
+  renderList();
+}
+
+function renderList(){
+  const examChips=DATA.map((e,i)=>`<button class="chip ${i===state.examIdx?'on':''}" data-ex="${i}">${esc(e.name)}</button>`).join("");
+  const exam=DATA[state.examIdx];
+  let cells="";
+  if(exam){
+    cells=exam.passages.map((p,i)=>`
+      <button class="pcell done" data-p="${i}">${esc(p.num)}번 ✓
+        <span class="tp">${esc(p.topic||"")}</span>
+      </button>`).join("");
+  }
+  app.innerHTML=`
+    <h2 class="sec"><span class="mark">1. 모의고사 고르기</span></h2>
+    <div class="chips">${examChips}</div>
+    <h2 class="sec"><span class="mark">2. 지문 고르기</span><span class="hint">✓ 분석 완료 · 탭하면 바로 학습</span></h2>
+    <div class="grid">${cells||'<div class="empty">아직 지문이 없어요.</div>'}</div>
+  `;
+  app.querySelectorAll("[data-ex]").forEach(b=>b.onclick=()=>{state.examIdx=+b.dataset.ex;render();});
+  app.querySelectorAll("[data-p]").forEach(b=>b.onclick=()=>{state.passage=+b.dataset.p;state.mode="basic";render();window.scrollTo(0,0);});
+}
+
+function modeData(p,mode){
+  // 모드별 가공: 데이터는 basic 1벌, 나머지는 클라이언트에서 변형
+  if(mode==="short"){
+    return {...p, comic:p.comic.slice(0,3), easy:p.easy.split(/(?<=[.!?。])\s/).slice(0,2).join(" "),
+      vocab:p.vocab.slice(0,4), sentences:p.sentences.slice(0,1)};
+  }
+  if(mode==="quiz"){
+    return {...p, comic:[], easy:"", structure:null, vocab:[], sentences:[]};
+  }
+  if(mode==="vocab"){
+    return {...p, comic:[], structure:null, sentences:[], examPoints:"", _vocabFocus:true};
+  }
+  if(mode==="final"){
+    return {...p, comic:[], easy:"", structure:null, sentences:[], quiz:[], vocab:p.vocab.slice(0,5)};
+  }
+  if(mode==="easy"){
+    return {...p, _easyNote:true};
+  }
+  return p;
+}
+
+function renderPassage(){
+  const exam=DATA[state.examIdx];
+  const base=exam.passages[state.passage];
+  const p=modeData(base,state.mode);
+  const has=v=>v&&(Array.isArray(v)?v.length:(typeof v==="object"?Object.values(v).some(x=>x):String(v).trim()));
+
+  const modeBtns=MODES.map(m=>`<button class="mbtn ${m.id===state.mode?'on':''}" data-m="${m.id}">${m.l}</button>`).join("");
+
+  let html=`<a class="back" id="back">← 지문 목록으로</a>
+    <div class="ptitle">${esc(exam.name)} <span class="n">${esc(base.num)}번</span></div>
+    <div class="ptopic">${esc(base.topic||"")}</div>
+    <div class="modes">${modeBtns}</div>`;
+
+  if(state.mode==="vocab"){
+    html+=card("⑤","핵심 단어·표현 (집중)", base.vocab.map(v=>
+      `<div class="voc"><b>${esc(v.word)}</b> — ${esc(v.mean)}<span class="role">↳ ${esc(v.role)}</span></div>`).join(""));
+    html+=card("⑧","10초 복습",`<div class="reviewline">⏱️ <span class="mark">${esc(base.review)}</span></div>`);
+  } else if(state.mode==="final"){
+    html+=card("①","한 줄 요약",`<div class="lead">${esc(base.summary)}</div>`);
+    html+=card("⑤","핵심 단어 5",p.vocab.map(v=>`<div class="voc"><b>${esc(v.word)}</b> — ${esc(v.mean)}</div>`).join(""));
+    html+=card("⑦","시험 포인트",`<div class="exambox txt">${esc(base.examPoints)}</div>`);
+    html+=card("⑧","10초 복습",`<div class="reviewline">⏱️ <span class="mark">${esc(base.review)}</span></div>`);
+  } else if(state.mode==="quiz"){
+    html+=card("⑦","시험 포인트",`<div class="exambox txt">${esc(base.examPoints)}</div>`);
+    html+=card("⑨","확인 질문",quizHtml(base.quiz));
+    html+=card("⑧","10초 복습",`<div class="reviewline">⏱️ <span class="mark">${esc(base.review)}</span></div>`);
+  } else {
+    html+=card("①","한 줄 핵심 요약",`<div class="lead">${esc(p.summary)}</div>`);
+    if(has(p.comic)) html+=card("②","만화처럼 이해하기",`<div class="comic">${p.comic.map(c=>{
+      const m=String(c).match(/^(\d+컷)\s*[:：]?\s*([\s\S]*)$/);
+      return `<div class="cut"><b>${m?esc(m[1]):''}</b>${esc(m?m[2]:c)}</div>`;}).join("")}</div>`);
+    if(has(p.easy)) html+=card("③","쉬운 설명",`<div class="txt">${esc(p.easy)}</div>`);
+    if(has(p.structure)) html+=card("④","지문 구조",Object.entries(p.structure).map(([k,v])=>
+      `<div class="strow"><span class="stag">${esc(k)}</span><span>${esc(v)}</span></div>`).join(""));
+    if(has(p.vocab)) html+=card("⑤","핵심 단어·표현",p.vocab.map(v=>
+      `<div class="voc"><b>${esc(v.word)}</b> — ${esc(v.mean)}<span class="role">↳ ${esc(v.role)}</span></div>`).join(""));
+    if(has(p.sentences)) html+=card("⑥","헷갈리는 문장 풀기",p.sentences.map(s=>
+      `<div class="sent"><div class="en">"${esc(s.sent)}"</div><div class="ko">👉 ${esc(s.explain)}</div></div>`).join(""));
+    if(has(base.examPoints)) html+=card("⑦","시험 포인트",`<div class="exambox txt">${esc(base.examPoints)}</div>`);
+    html+=card("⑧","10초 복습",`<div class="reviewline">⏱️ <span class="mark">${esc(base.review)}</span></div>`);
+    if(has(base.quiz)) html+=card("⑨","확인 질문",quizHtml(base.quiz));
+  }
+
+  app.innerHTML=html;
+  document.getElementById("back").onclick=()=>{state.passage=null;render();window.scrollTo(0,0);};
+  app.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{state.mode=b.dataset.m;render();});
+  bindQuiz();
+}
+
+function card(no,title,inner){
+  return `<div class="card"><div class="stitle"><span class="no">${no}</span><h3>${esc(title)}</h3></div>${inner}</div>`;
+}
+function quizHtml(qz){
+  return (qz||[]).map((q,i)=>`<div class="qz"><div class="q"><b>Q${i+1}.</b> ${esc(q.q)}</div>
+    <button class="qbtn" data-a="${esc(q.a)}">정답 보기 👆</button></div>`).join("");
+}
+function bindQuiz(){
+  app.querySelectorAll(".qbtn").forEach(b=>{
+    b.onclick=()=>{
+      if(b.classList.contains("open")){b.classList.remove("open");b.textContent="정답 보기 👆";}
+      else{b.classList.add("open");b.textContent=b.dataset.a;}
+    };
+  });
+}
+
+function renderReview(){
+  let items=[];
+  DATA.forEach((e,ei)=>e.passages.forEach((p,pi)=>items.push({ei,pi,exam:e.name,num:p.num,review:p.review,summary:p.summary})));
+  app.innerHTML=`<h2 class="sec"><span class="mark">⏱️ 10초 복습 모아보기</span><span class="hint">${items.length}개 지문</span></h2>`
+    + items.map(it=>`<div class="rv" data-ei="${it.ei}" data-pi="${it.pi}">
+        <div class="meta">${esc(it.exam)} · ${esc(it.num)}번</div>
+        <div class="rl">${esc(it.review)}</div>
+        <div class="sm">${esc(it.summary)}</div></div>`).join("");
+  app.querySelectorAll(".rv").forEach(b=>b.onclick=()=>{
+    state.tab="study";state.examIdx=+b.dataset.ei;state.passage=+b.dataset.pi;state.mode="basic";
+    document.getElementById("tabStudy").classList.add("on");
+    document.getElementById("tabReview").classList.remove("on");
+    render();window.scrollTo(0,0);
+  });
+}
+
+/* ───────── 탭 ───────── */
+document.getElementById("tabStudy").onclick=function(){
+  state.tab="study";this.classList.add("on");document.getElementById("tabReview").classList.remove("on");render();window.scrollTo(0,0);
+};
+document.getElementById("tabReview").onclick=function(){
+  state.tab="review";this.classList.add("on");document.getElementById("tabStudy").classList.remove("on");render();window.scrollTo(0,0);
+};
+
+render();
+</script>
+</body>
+</html>
