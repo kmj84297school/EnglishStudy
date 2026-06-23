@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>열공 · 영어 지문 공부</title>
+<title>영어 지문 공부</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800;900&display=swap" rel="stylesheet">
@@ -116,13 +116,25 @@
   .rv .sm{font-size:11.5px;color:var(--gray);margin-top:2px}
 
   footer{text-align:center;font-size:11px;color:var(--gray);margin-top:26px;line-height:1.7}
+
+  /* ── 실전(수능형) 모드 ── */
+  .en-line{font-size:13.5px;font-style:italic;background:#F0EEE6;border-radius:7px;padding:8px 10px;font-weight:600}
+  .gqlist .gq{font-size:13px;line-height:1.5;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .gqlist .gq:last-child{border:none}
+  .stag.abc{background:var(--red)}
+  .clue{margin-top:9px;font-size:12px;color:var(--green);font-weight:700;background:#EEF5F0;border-radius:7px;padding:7px 9px;line-height:1.5}
+  .inslist .ins{margin-bottom:10px}
+  .inslist .ins:last-child{margin:0}
+  .ins-sent{font-size:12.5px;font-style:italic;background:#F0EEE6;border-radius:7px;padding:7px 9px;margin-bottom:4px}
+  .ins-clue{font-size:13px;line-height:1.5}
+  .exam-empty{font-size:13px;color:var(--gray);line-height:1.7;text-align:center;padding:8px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="navrow">
-      <div class="brand">열공<span class="dot">.</span><small>영어 지문 공부</small></div>
+      <div class="brand">공부<span class="dot">.</span><small>영어 지문 공부</small></div>
       <div class="tabs">
         <button class="tab on" id="tabStudy">학습</button>
         <button class="tab" id="tabReview">총복습</button>
@@ -136,7 +148,7 @@
   <main id="app"></main>
   <footer>
     영어 모의고사 스터디 페이지<br>
-    분석은 9단계 포맷 · 응원 문구는 매일 자동으로 바뀝니다 · 열공!
+    분석은 9단계 포맷 · 응원 문구는 매일 자동으로 바뀝니다
   </footer>
 </div>
 
@@ -146,7 +158,7 @@
 const CHEERS = [
   "오늘 읽은 한 지문이 시험장에서 너를 구한다!",
   "빈칸은 흐름을 잡은 사람이 이긴다. 천천히 가자!",
-  "지문 한 컷, 실력 한 스텝. 가볍게 쌓아가자!",
+  "밥 한 술, 지문 한 컷. 가볍게 쌓아가자!",
   "어휘 하나가 1점을 만든다. 오늘도 한 개 더!",
   "독해는 속도가 아니라 이해다. 꼭꼭 씹자!",
   "모르는 문장은 적이 아니라 다음 레벨로 가는 문이다!",
@@ -156,7 +168,7 @@ const CHEERS = [
   "오늘의 5지문이 모여 시험날의 자신감이 된다!",
   "헷갈리는 문장일수록 주어·동사부터 찾자!",
   "포기하지 않는 사람만 빈칸을 채운다!",
-  "틈새 시간에 한 문장. 그게 쌓이면 실력!",
+  "한 입 먹고 한 문장. 그게 쌓이면 실력!",
   "순서·삽입은 연결어가 길을 알려준다!",
   "단어를 외우는 게 아니라 친해지는 거다!",
   "오답도 데이터다. 왜 틀렸는지가 보물이다!",
@@ -167,7 +179,7 @@ const CHEERS = [
   "긴장될 땐 심호흡, 그리고 첫 문장부터!",
   "today의 너는 어제보다 분명히 강하다!",
   "감정 단어 vs 이성 단어, 대조를 즐기자!",
-  "마음은 가볍게, 공부는 꾸준하게!",
+  "밥은 든든하게, 공부는 가볍게!",
   "한 지문을 끝까지 이해하면 열 지문이 보인다!",
   "어휘 문제는 반의어 함정만 피하면 OK!",
   "글의 반전(however)을 찾으면 출제 포인트가 보인다!",
@@ -184,7 +196,7 @@ const CHEERS = [
   "긴 문장은 끊어 읽기. 한 덩이씩!",
   "모의고사는 연습. 틀려도 괜찮은 무대다!",
   "지문의 마지막 문장에 주제가 숨어 있다!",
-  "한 발 더 나아가듯, 지문 하나 더!",
+  "한 술 더 뜨듯, 지문 하나 더!",
   "영어는 매일 조금씩이 정답이다!",
   "오늘의 집중이 시험날 1등급을 만든다!",
   "어휘·구조·흐름, 셋만 잡으면 끝!",
@@ -192,12 +204,12 @@ const CHEERS = [
   "작은 진전도 진전이다. 박수!",
   "독해는 추리 게임. 단서를 모으자!",
   "오늘 배운 10초 복습 문장, 꼭 떠올리자!",
-  "꾸준한 한 번의 공부가 너를 바꾼다!",
+  "꾸준한 한 끼 공부가 너를 바꾼다!",
   "지문이 길어도 핵심은 한 문장이다!",
   "어제 헷갈린 지문, 오늘은 친구가 됐다!",
   "시험은 결국 평소 실력의 거울이다!",
   "한 지문의 깊은 이해 > 열 지문 대충!",
-  "오늘도 책상 앞에서 1점씩 모으자!",
+  "오늘도 밥상 앞에서 1점씩 모으자!",
   "글쓴이가 진짜 하고 싶은 말을 찾자!",
   "반복되는 단어가 곧 주제어다!",
   "천천히 읽어도 정확히 읽으면 이긴다!",
@@ -215,7 +227,7 @@ function dayOfYear(){const d=new Date();const s=new Date(d.getFullYear(),0,0);re
 
 /* ───────── 상태 ───────── */
 const DATA = (window.STUDY_DATA && window.STUDY_DATA.exams) || [];
-const MODES=[{id:"basic",l:"기본"},{id:"easy",l:"더 쉽게"},{id:"short",l:"더 짧게"},{id:"quiz",l:"문제 중심"},{id:"vocab",l:"단어 중심"},{id:"final",l:"시험 직전용"}];
+const MODES=[{id:"basic",l:"기본"},{id:"exam",l:"실전(수능형)"},{id:"easy",l:"더 쉽게"},{id:"short",l:"더 짧게"},{id:"quiz",l:"문제 중심"},{id:"vocab",l:"단어 중심"},{id:"final",l:"시험 직전용"}];
 let state={tab:"study",examIdx:0,passage:null,mode:"basic"};
 const app=document.getElementById("app");
 const esc=s=>(s==null?"":String(s)).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
@@ -281,7 +293,27 @@ function renderPassage(){
     <div class="ptopic">${esc(base.topic||"")}</div>
     <div class="modes">${modeBtns}</div>`;
 
-  if(state.mode==="vocab"){
+  if(state.mode==="exam"){
+    const hasExam = base.examTheme||base.examPoint||base.examTitle||has(base.grammarQ)||has(base.orderABC)||has(base.insertPrep);
+    if(!hasExam){
+      html+=`<div class="card"><div class="exam-empty">📝 이 지문은 아직 <b>실전(수능형)</b> 분석이 준비되지 않았어요.<br>‘기본’ 모드로 보거나, 다음 업데이트를 기다려 주세요!</div></div>`;
+    } else {
+      if(base.examTheme) html+=card("①","예상 주제 (Topic)",`<div class="en-line">${esc(base.examTheme)}</div>`);
+      if(base.examPoint) html+=card("②","예상 요지 (요지)",`<div class="lead">${esc(base.examPoint)}</div>`);
+      if(base.examTitle) html+=card("③","예상 제목 (Title)",`<div class="txt">${esc(base.examTitle)}</div>`);
+      if(has(base.easy)) html+=card("④","쉬운 설명",`<div class="txt">${esc(base.easy)}</div>`);
+      if(has(base.vocab)) html+=card("⑤","주요 어휘",base.vocab.map(v=>
+        `<div class="voc"><b>${esc(v.word)}</b> — ${esc(v.mean)}<span class="role">↳ ${esc(v.role)}</span></div>`).join(""));
+      if(has(base.grammarQ)) html+=card("⑥","예상 문법 문제",`<div class="gqlist">${base.grammarQ.map(g=>`<div class="gq">▸ ${esc(g)}</div>`).join("")}</div>`);
+      if(has(base.orderABC)) html+=card("⑦","순서 대비 (A·B·C)",
+        base.orderABC.blocks.map(b=>`<div class="strow"><span class="stag abc">${esc(b.tag)}</span><span>${esc(b.text)}</span></div>`).join("")
+        + (base.orderABC.clue?`<div class="clue">🔗 연결 단서: ${esc(base.orderABC.clue)}</div>`:""));
+      if(has(base.insertPrep)) html+=card("⑧","삽입 대비",`<div class="inslist">${base.insertPrep.map(s=>
+        `<div class="ins"><div class="ins-sent">"${esc(s.sent)}"</div><div class="ins-clue">👉 ${esc(s.clue)}</div></div>`).join("")}</div>`);
+      html+=card("⑨","10초 복습",`<div class="reviewline">⏱️ <span class="mark">${esc(base.review)}</span></div>`);
+      if(has(base.quiz)) html+=card("⑩","확인 질문",quizHtml(base.quiz));
+    }
+  } else if(state.mode==="vocab"){
     html+=card("⑤","핵심 단어·표현 (집중)", base.vocab.map(v=>
       `<div class="voc"><b>${esc(v.word)}</b> — ${esc(v.mean)}<span class="role">↳ ${esc(v.role)}</span></div>`).join(""));
     html+=card("⑧","10초 복습",`<div class="reviewline">⏱️ <span class="mark">${esc(base.review)}</span></div>`);
